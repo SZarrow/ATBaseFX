@@ -8,8 +8,8 @@
 
 ### OSS
 
-* [OSS 文档](https://github.com/dotnetrun/ATBaseFX/wiki/OSS)
+* [OSS 文档](https://github.com/dotnetrun/ATBaseFX/tree/master/src/OSS)
 
 ### MongoDB
 
-* [MongDB 文档](https://github.com/dotnetrun/ATBaseFX/wiki/MongoDB)
+* [MongDB 文档](https://github.com/dotnetrun/ATBaseFX/tree/master/src/Data/ATBase.Data.MongoDb)
