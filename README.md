@@ -8,8 +8,8 @@ This is a BCL designed for common platforms, includes OSS, MongoDb and so on.
 
 ### OSS
 
-* [OSS documentation](https://github.com/dotnetrun/ATBaseFX/wiki/OSS)
+* [OSS documentation](https://github.com/dotnetrun/ATBaseFX/tree/master/src/OSS)
 
 ### MongoDB
 
-* [MongDB documentation](https://github.com/dotnetrun/ATBaseFX/wiki/MongoDB)
+* [MongDB documentation](https://github.com/dotnetrun/ATBaseFX/tree/master/src/Data/ATBase.Data.MongoDb)
