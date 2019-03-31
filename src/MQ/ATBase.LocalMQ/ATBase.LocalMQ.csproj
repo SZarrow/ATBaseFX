@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>ATBase.LocalMQ</AssemblyName>
+    <RootNamespace>ATBase.LocalMQ</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lotus.Core" Version="1.0.34" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ATBase.Core\ATBase.Core.csproj" />
+  </ItemGroup>
+
+</Project>

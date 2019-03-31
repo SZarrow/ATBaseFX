@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.1.24</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Works\LotusFX\src\Lotus.Logging\Lotus.Logging.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Lotus.Logging.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ATBase.Core\ATBase.Core.csproj" />
+    <ProjectReference Include="..\ATBase.Net\ATBase.Net.csproj" />
+    <ProjectReference Include="..\Data\ATBase.Data.MongoDb\ATBase.Data.MongoDb.csproj" />
+    <ProjectReference Include="..\Data\ATBase.Data\ATBase.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Configs\ATBase.Logging.Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
