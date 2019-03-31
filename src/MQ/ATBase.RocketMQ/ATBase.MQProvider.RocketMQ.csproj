@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Works\LotusFX\src\MQ\Lotus.RocketMQ\Lotus.MQProvider.RocketMQ.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Works\LotusFX\src\MQ\Lotus.RocketMQ\Lotus.MQProvider.RocketMQ.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ATBase.MQCore\ATBase.MQCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Aliyun.RocketMQ">
+      <HintPath>lib\Aliyun.RocketMQ.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AliyunONSConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\ONSClient4CPP.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\ONSClient4CPP.exp">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\ONSClient4CPP.lib">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="icopy $(ProjectDir)lib\ONSClient4CPP.dll $(TargetDir)&#xD;&#xA;icopy $(ProjectDir)lib\ONSClient4CPP.exp $(TargetDir)&#xD;&#xA;icopy $(ProjectDir)lib\ONSClient4CPP.lib $(TargetDir)" />
+  </Target>
+
+</Project>
