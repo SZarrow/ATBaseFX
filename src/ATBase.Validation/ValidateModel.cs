@@ -23,15 +23,21 @@ namespace ATBase.Validation
             {
                 if (_isValid == null)
                 {
-                    var validateResult = this.Validate();
-                    if (!validateResult.Success)
+                    //先进行Attribute验证
+                    var attrValidated = this.AttributeValidate();
+                    if (!attrValidated)
                     {
-                        this.ErrorMessage = validateResult.Message;
-                        _isValid = false;
+                        _isValid = attrValidated;
                     }
                     else
                     {
-                        _isValid = this.AttributeValidate();
+                        var validateResult = this.Validate();
+                        _isValid = validateResult.Success;
+
+                        if (!validateResult.Success)
+                        {
+                            this.ErrorMessage = validateResult.Message;
+                        }
                     }
                 }
 
