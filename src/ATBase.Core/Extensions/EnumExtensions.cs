@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
@@ -50,6 +51,22 @@ namespace ATBase.Core.Extensions
         public static String GetValue(this Enum obj)
         {
             return GetValue<String>(obj);
+        }
+
+        /// <summary>
+        /// 获取枚举类的描述信息
+        /// </summary>
+        /// <param name="eo"></param>
+        public static String GetDescription(this Enum eo)
+        {
+            var descAttr = eo.GetType().GetField(eo.ToString()).GetCustomAttribute<DescriptionAttribute>();
+
+            if (descAttr != null)
+            {
+                return descAttr.Description;
+            }
+
+            return eo.ToString();
         }
     }
 }
