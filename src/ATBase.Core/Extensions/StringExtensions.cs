@@ -101,12 +101,21 @@ namespace ATBase.Core
         /// <typeparam name="TEnum"></typeparam>
         public static String GetDescription<TEnum>(this String literal)
         {
-            var descAttr = typeof(TEnum).GetField(literal).GetCustomAttribute<DescriptionAttribute>();
-
-            if (descAttr != null)
+            if (literal.IsNullOrWhiteSpace())
             {
-                return descAttr.Description;
+                return null;
             }
+
+            try
+            {
+                var descAttr = typeof(TEnum).GetField(literal).GetCustomAttribute<DescriptionAttribute>();
+
+                if (descAttr != null)
+                {
+                    return descAttr.Description;
+                }
+            }
+            catch { }
 
             return literal;
         }
