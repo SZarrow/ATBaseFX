@@ -57,10 +57,9 @@ namespace ATBase.Core.Extensions
         /// 获取枚举类的描述信息
         /// </summary>
         /// <param name="eo"></param>
-        /// <param name="literal">字面值</param>
-        public static String GetDescription(this Enum eo, String literal = null)
+        public static String GetDescription(this Enum eo)
         {
-            var descAttr = eo.GetType().GetField(literal ?? eo.ToString()).GetCustomAttribute<DescriptionAttribute>();
+            var descAttr = eo.GetType().GetField(eo.ToString()).GetCustomAttribute<DescriptionAttribute>();
 
             if (descAttr != null)
             {

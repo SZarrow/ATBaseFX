@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Primitives;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace ATBase.Core
 {
@@ -94,6 +93,22 @@ namespace ATBase.Core
         public static Boolean HasValue(this String str)
         {
             return !str.IsNullOrWhiteSpace();
+        }
+
+        /// <summary>
+        /// 获取当前枚举类字面值的描述信息
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        public static String GetDescription<TEnum>(this String literal)
+        {
+            var descAttr = typeof(TEnum).GetField(literal).GetCustomAttribute<DescriptionAttribute>();
+
+            if (descAttr != null)
+            {
+                return descAttr.Description;
+            }
+
+            return literal;
         }
     }
 }
