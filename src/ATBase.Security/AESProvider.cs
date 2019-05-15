@@ -17,6 +17,11 @@ namespace ATBase.Security
 
         public XResult<Byte[]> AESEncrypt(Byte[] data, Byte[] key)
         {
+            return AESEncrypt(data, key, DefaultIV);
+        }
+
+        public XResult<Byte[]> AESEncrypt(Byte[] data, Byte[] key, Byte[] iv)
+        {
             if (data == null || data.Length == 0)
             {
                 return new XResult<Byte[]>(null, new ArgumentNullException(nameof(data)));
@@ -37,7 +42,7 @@ namespace ATBase.Security
                 aesAlg.Padding = DefaultPaddingMode;
 
                 aesAlg.Key = key;
-                aesAlg.IV = DefaultIV;
+                aesAlg.IV = iv;
 
                 var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
@@ -70,6 +75,11 @@ namespace ATBase.Security
 
         public XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key)
         {
+            return AESDecrypt(encryptedData, key, DefaultIV);
+        }
+
+        public XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key, Byte[] iv)
+        {
             if (encryptedData == null || encryptedData.Length == 0)
             {
                 return new XResult<Byte[]>(null, new ArgumentNullException(nameof(encryptedData)));
@@ -90,7 +100,7 @@ namespace ATBase.Security
                 aesAlg.Padding = DefaultPaddingMode;
 
                 aesAlg.Key = key;
-                aesAlg.IV = DefaultIV;
+                aesAlg.IV = iv;
 
                 var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
@@ -159,5 +169,6 @@ namespace ATBase.Security
                 if (alg != null) { alg.Dispose(); }
             }
         }
+
     }
 }
