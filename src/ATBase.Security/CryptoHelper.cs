@@ -118,11 +118,33 @@ namespace ATBase.Security
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="data"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        public static XResult<Byte[]> AESEncrypt(Byte[] data, Byte[] key, Byte[] iv)
+        {
+            return _aesProvider.AESEncrypt(data, key, iv);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="encryptedData"></param>
         /// <param name="key"></param>
         public static XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key)
         {
             return _aesProvider.AESDecrypt(encryptedData, key);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="encryptedData"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        public static XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key, Byte[] iv)
+        {
+            return _aesProvider.AESDecrypt(encryptedData, key, iv);
         }
 
         /// <summary>
