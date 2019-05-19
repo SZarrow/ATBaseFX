@@ -46,7 +46,7 @@ namespace ATBase.Core
         /// </summary>
         /// <param name="value"></param>
         /// <param name="errorCode"></param>
-        public XResult(T value, Int32 errorCode) : this(value, errorCode, String.Empty) { }
+        public XResult(T value, Int32 errorCode) : this(value, errorCode, ErrorCodeDescriptor.GetDescription(errorCode)) { }
 
         /// <summary>
         /// Initialize the instance of Result with value, error code and exception.
