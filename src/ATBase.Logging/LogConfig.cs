@@ -32,6 +32,10 @@ namespace ATBase.Logging
         /// 文件名格式，支持日期时间格式字符串
         /// </summary>
         public String FileNameFormat { get; set; }
+        /// <summary>
+        /// 文件分部序号
+        /// </summary>
+        public Int32 PartialIndex { get; set; }
 
         /// <summary>
         /// 获取文件路径
@@ -57,6 +61,11 @@ namespace ATBase.Logging
                     {
                         fileName = this.FileNameFormat;
                     }
+                }
+
+                if (this.PartialIndex > 0)
+                {
+                    fileName += $"_{this.PartialIndex.ToString().PadLeft(3, '0')}";
                 }
 
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", $"{fileName}.txt");

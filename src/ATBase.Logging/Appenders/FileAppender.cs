@@ -51,6 +51,11 @@ namespace ATBase.Logging.Appenders
                     writtenLogs.Add(content);
                 }
 
+                if (fs.Length > 10485760)
+                {
+                    _config.PartialIndex++;
+                }
+
                 return new XResult<IEnumerable<LogEntity>>(writtenLogs.Count > 0 ? writtenLogs : null);
             }
             catch (Exception ex)
