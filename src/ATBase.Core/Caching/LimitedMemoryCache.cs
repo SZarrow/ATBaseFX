@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Caching.Memory;
+using System.Linq;
 
 namespace ATBase.Core.Caching
 {
@@ -11,6 +10,8 @@ namespace ATBase.Core.Caching
     /// </summary>
     public class LimitedMemoryCache : ICache, IDisposable
     {
+        private static readonly ConcurrentDictionary<Object, DateTime> _keyTimes = new ConcurrentDictionary<Object, DateTime>();
+
         private readonly MemoryCache _cache;
         private readonly Int32 _limitCount;
 
@@ -56,6 +57,7 @@ namespace ATBase.Core.Caching
         public void Dispose()
         {
             _cache.Dispose();
+            _keyTimes.Clear();
         }
 
         /// <summary>
@@ -64,10 +66,13 @@ namespace ATBase.Core.Caching
         /// <param name="key"></param>
         public void Remove(Object key)
         {
-            if (key != null)
+            if (key == null)
             {
-                _cache.Remove(key);
+                return;
             }
+
+            _cache.Remove(key);
+            _keyTimes.TryRemove(key, out _);
         }
 
         /// <summary>
@@ -79,10 +84,15 @@ namespace ATBase.Core.Caching
         /// <param name="absoluteExpiration"></param>
         public void Set<T>(Object key, T value, DateTime absoluteExpiration)
         {
-            if (_cache.Count < _limitCount && key != null)
+            if (key == null)
             {
-                _cache.Set(key, value, new DateTimeOffset(absoluteExpiration));
+                return;
             }
+
+            RemoveOlestKeys();
+
+            _cache.Set(key, value, new DateTimeOffset(absoluteExpiration));
+            _keyTimes[key] = DateTime.Now;
         }
 
         /// <summary>
@@ -94,9 +104,28 @@ namespace ATBase.Core.Caching
         /// <param name="absoluteExpirationRelativeToNow"></param>
         public void Set<T>(Object key, T value, TimeSpan absoluteExpirationRelativeToNow)
         {
-            if (_cache.Count < _limitCount && key != null)
+            if (key == null)
             {
-                _cache.Set(key, value, absoluteExpirationRelativeToNow);
+                return;
+            }
+
+            RemoveOlestKeys();
+
+            _cache.Set(key, value, absoluteExpirationRelativeToNow);
+            _keyTimes[key] = DateTime.Now;
+        }
+
+        private void RemoveOlestKeys()
+        {
+            var totalCount = _cache.Count;
+            if (totalCount >= _limitCount - 10)
+            {
+                var keys = _keyTimes.OrderBy(x => x.Value).Take(10);
+                foreach (var key in keys)
+                {
+                    _cache.Remove(key);
+                    _keyTimes.TryRemove(key, out _);
+                }
             }
         }
 
