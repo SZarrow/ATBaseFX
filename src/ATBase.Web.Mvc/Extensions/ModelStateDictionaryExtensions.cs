@@ -12,8 +12,7 @@ namespace ATBase.Web.Mvc
     public static class ModelStateDictionaryExtensions
     {
         /// <summary>
-        /// 
-        /// </summary>
+        /// aa        /// </summary>
         /// <param name="msd"></param>
         public static String GetFirstErrorMessage(this ModelStateDictionary msd)
         {
