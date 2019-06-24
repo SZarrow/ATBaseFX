@@ -99,12 +99,19 @@ namespace ATBase.Security
         }
 
         /// <summary>
-        /// 生成随机的Key
+        /// 使用AES算法生成随机的Key
         /// </summary>
-        /// <param name="algName">仅支持DES，TripleDES，3DES三种，默认使用 TripleDES</param>
-        public static Byte[] GenerateRandomKey(String algName = "TripleDES")
+        public static Byte[] GenerateAESRandomKey()
         {
-            return KeyProvider.GenerateRandomKey(algName);
+            return _aesProvider.GenerateRandomKey();
+        }
+
+        /// <summary>
+        /// 使用DES算法生成随机的Key
+        /// </summary>
+        public static Byte[] GenerateDESRandomKey()
+        {
+            return _desProvider.GenerateRandomKey();
         }
 
         /// <summary>

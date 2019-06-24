@@ -139,5 +139,15 @@ namespace ATBase.Security
 
             return new XResult<Byte[]>(decryptedData);
         }
+
+        public Byte[] GenerateRandomKey()
+        {
+            using (var aes = Aes.Create())
+            {
+                aes.GenerateKey();
+                aes.KeySize = DefaultKeySize;
+                return aes.Key;
+            }
+        }
     }
 }

@@ -11,6 +11,10 @@ namespace ATBase.Security
     public interface IAESProvider
     {
         /// <summary>
+        /// 
+        /// </summary>
+        Byte[] GenerateRandomKey();
+        /// <summary>
         /// AES加密
         /// </summary>
         /// <param name="data"></param>
