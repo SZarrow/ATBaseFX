@@ -139,36 +139,5 @@ namespace ATBase.Security
 
             return new XResult<Byte[]>(decryptedData);
         }
-
-        public Byte[] GenerateRandomKey(String algName)
-        {
-            Int32 keySize = 128;
-            switch (algName)
-            {
-                case "DES":
-                    keySize = 64;
-                    break;
-                case "3DES":
-                    keySize = 192;
-                    break;
-            }
-
-            SymmetricAlgorithm alg = null;
-            try
-            {
-                alg = SymmetricAlgorithm.Create(algName);
-                alg.KeySize = keySize;
-                return alg.Key;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            finally
-            {
-                if (alg != null) { alg.Dispose(); }
-            }
-        }
-
     }
 }
