@@ -11,9 +11,12 @@ namespace ATBase.Web.Mvc
     /// </summary>
     public static class ModelStateDictionaryExtensions
     {
+
         /// <summary>
-        /// aa        /// </summary>
+        /// 
+        /// </summary>
         /// <param name="msd"></param>
+        /// <returns></returns>
         public static String GetFirstErrorMessage(this ModelStateDictionary msd)
         {
             if (msd != null && msd.Count > 0)
