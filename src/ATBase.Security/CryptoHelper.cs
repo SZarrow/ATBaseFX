@@ -17,12 +17,14 @@ namespace ATBase.Security
         private static IOneWayHash _onewayhash;
         private static IRSAProvider _rsaProvider;
         private static IAESProvider _aesProvider;
+        private static IDESProvider _desProvider;
 
         static CryptoHelper()
         {
             _onewayhash = new OneWayHash();
             _rsaProvider = new RSAProvider();
             _aesProvider = new AESProvider();
+            _desProvider = new DESProvider();
         }
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace ATBase.Security
         /// <param name="algName">仅支持DES，TripleDES，3DES三种，默认使用 TripleDES</param>
         public static Byte[] GenerateRandomKey(String algName = "TripleDES")
         {
-            return _aesProvider.GenerateRandomKey(algName);
+            return KeyProvider.GenerateRandomKey(algName);
         }
 
         /// <summary>
@@ -145,6 +147,48 @@ namespace ATBase.Security
         public static XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key, Byte[] iv)
         {
             return _aesProvider.AESDecrypt(encryptedData, key, iv);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="key"></param>
+        public static XResult<Byte[]> DESEncrypt(Byte[] data, Byte[] key)
+        {
+            return _desProvider.DESEncrypt(data, key);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        public static XResult<Byte[]> DESEncrypt(Byte[] data, Byte[] key, Byte[] iv)
+        {
+            return _desProvider.DESEncrypt(data, key, iv);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="encryptedData"></param>
+        /// <param name="key"></param>
+        public static XResult<Byte[]> DESDecrypt(Byte[] encryptedData, Byte[] key)
+        {
+            return _desProvider.DESDecrypt(encryptedData, key);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="encryptedData"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        public static XResult<Byte[]> DESDecrypt(Byte[] encryptedData, Byte[] key, Byte[] iv)
+        {
+            return _desProvider.DESDecrypt(encryptedData, key, iv);
         }
 
         /// <summary>
@@ -233,19 +277,18 @@ namespace ATBase.Security
         }
 
         /// <summary>
-        /// 
+        /// 生成RSA签名字符串
         /// </summary>
         /// <param name="signContent"></param>
         /// <param name="privateKeyPem"></param>
         /// <param name="algName"></param>
-        /// <returns></returns>
         public static XResult<String> MakeSign(String signContent, String privateKeyPem, HashAlgorithmName algName)
         {
             return MakeSign(signContent, privateKeyPem, PrivateKeyFormat.PKCS1, algName);
         }
 
         /// <summary>
-        /// 
+        /// 生成RSA签名字符串
         /// </summary>
         /// <param name="signContent"></param>
         /// <param name="privateKeyPem"></param>
@@ -268,7 +311,7 @@ namespace ATBase.Security
         }
 
         /// <summary>
-        /// 
+        /// 生成RSA签名字符串
         /// </summary>
         /// <param name="signContent"></param>
         /// <param name="privateKeyPem"></param>
@@ -290,10 +333,10 @@ namespace ATBase.Security
         }
 
         /// <summary>
-        /// 
+        /// 对RSA签名进行验证
         /// </summary>
-        /// <param name="signNeedToVerify"></param>
-        /// <param name="signContent"></param>
+        /// <param name="signNeedToVerify">验签用的Sign值</param>
+        /// <param name="signContent">用来计算签名的内容</param>
         /// <param name="publicKeyPem"></param>
         /// <param name="algName"></param>
         /// <returns></returns>
@@ -318,10 +361,10 @@ namespace ATBase.Security
         }
 
         /// <summary>
-        /// 
+        /// 对RSA签名进行验签
         /// </summary>
-        /// <param name="signNeedToVerify"></param>
-        /// <param name="signContent"></param>
+        /// <param name="signNeedToVerify">验签用的Sign值</param>
+        /// <param name="signContent">用来计算签名的内容</param>
         /// <param name="publicKey"></param>
         /// <param name="algName"></param>
         public static XResult<Boolean> VerifySign(Byte[] signNeedToVerify, Byte[] signContent, String publicKey, HashAlgorithmName algName)
