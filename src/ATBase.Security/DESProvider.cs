@@ -12,11 +12,11 @@ namespace ATBase.Security
     /// </summary>
     public class DESProvider : IDESProvider
     {
-        private const Int32 DefaultKeySize = 256;
-        private const Int32 DefaultBlockSize = 128;
+        private const Int32 DefaultKeySize = 64;
+        private const Int32 DefaultBlockSize = 64;
         private const CipherMode DefaultCipherMode = CipherMode.CBC;
         private const PaddingMode DefaultPaddingMode = PaddingMode.PKCS7;
-        private static readonly Byte[] DefaultIV = Convert.FromBase64String("AAAAAAAAAAAAAAAAAAAAAA==");
+        private static readonly Byte[] DefaultIV = Convert.FromBase64String("AAAAAAAAAAA=");
 
         /// <summary>
         /// 
@@ -163,6 +163,20 @@ namespace ATBase.Security
             }
 
             return new XResult<Byte[]>(encrypted);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Byte[] GenerateRandomKey()
+        {
+            using (var des = DES.Create())
+            {
+                des.GenerateKey();
+                des.KeySize = DefaultKeySize;
+                return des.Key;
+            }
         }
     }
 }

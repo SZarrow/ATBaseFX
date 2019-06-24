@@ -11,6 +11,10 @@ namespace ATBase.Security
     public interface IDESProvider
     {
         /// <summary>
+        /// 
+        /// </summary>
+        Byte[] GenerateRandomKey();
+        /// <summary>
         /// DES加密
         /// </summary>
         /// <param name="data"></param>
