@@ -91,7 +91,7 @@ namespace ATBase.Core.Caching
 
             RemoveOlestKeys();
 
-            _cache.Set(key, value, new DateTimeOffset(absoluteExpiration.ToUniversalTime()));
+            _cache.Set(key, value, new DateTimeOffset(absoluteExpiration));
             _keyTimes[key] = DateTime.Now;
         }
 
