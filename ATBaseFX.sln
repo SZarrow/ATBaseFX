@@ -47,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ATBase.LocalMQ", "src\MQ\AT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D98E8356-3CD0-4C7A-98EF-DBB42DCEC40F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATBase.Security.Tests", "test\ATBase.Security.Tests\ATBase.Security.Tests.csproj", "{E0E3069C-D52E-42F0-9B9A-238A0187CD48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ATBase.Security.Tests", "test\ATBase.Security.Tests\ATBase.Security.Tests.csproj", "{E0E3069C-D52E-42F0-9B9A-238A0187CD48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATBase.Core.Tests", "test\ATBase.Core.Tests\ATBase.Core.Tests.csproj", "{C9287DD7-8236-4048-A845-8064A0F3591D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,10 @@ Global
 		{E0E3069C-D52E-42F0-9B9A-238A0187CD48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0E3069C-D52E-42F0-9B9A-238A0187CD48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0E3069C-D52E-42F0-9B9A-238A0187CD48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9287DD7-8236-4048-A845-8064A0F3591D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9287DD7-8236-4048-A845-8064A0F3591D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9287DD7-8236-4048-A845-8064A0F3591D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9287DD7-8236-4048-A845-8064A0F3591D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +155,7 @@ Global
 		{28F88062-C16B-4F98-B26A-12CA951B4492} = {C2DEE63C-1744-4741-8792-3C05C864D88C}
 		{C35A957E-65E3-4C5A-A321-81BC8ED6F7FD} = {C48A35D7-FC90-4502-806E-7D2339F0ACB3}
 		{E0E3069C-D52E-42F0-9B9A-238A0187CD48} = {D98E8356-3CD0-4C7A-98EF-DBB42DCEC40F}
+		{C9287DD7-8236-4048-A845-8064A0F3591D} = {D98E8356-3CD0-4C7A-98EF-DBB42DCEC40F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75DFAC68-4D3A-46B6-8147-7B4FD62A3822}
