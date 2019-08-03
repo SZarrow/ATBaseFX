@@ -44,5 +44,12 @@ namespace ATBase.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         void Remove(Object key);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Boolean Exists(Object key);
     }
 }

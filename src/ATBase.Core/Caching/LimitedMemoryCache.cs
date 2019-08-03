@@ -91,7 +91,7 @@ namespace ATBase.Core.Caching
 
             RemoveOlestKeys();
 
-            _cache.Set(key, value, new DateTimeOffset(absoluteExpiration.ToUniversalTime()));
+            _cache.Set(key, value, new DateTimeOffset(absoluteExpiration));
             _keyTimes[key] = DateTime.Now;
         }
 
@@ -160,6 +160,16 @@ namespace ATBase.Core.Caching
             }
 
             return default(T);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Boolean Exists(Object key)
+        {
+            return _cache.TryGetValue(key, out _);
         }
     }
 }

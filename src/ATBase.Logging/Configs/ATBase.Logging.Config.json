@@ -11,9 +11,9 @@
       "SmtpServerAddress": "smtp.ym.163.com",
       "SmtpServerPort": 994,
       "UseSSL": true,
-      "SendAccount": "log@suziyun.com",
-      "Credential": "9eE87MF7Bh",
-      "ReceiveAccounts": "007@suziyun.com"
+      "SendAccount": "",
+      "Credential": "",
+      "ReceiveAccounts": ""
     },
     "ConsoleAppender": {
       "LogLevel": "Trace"
