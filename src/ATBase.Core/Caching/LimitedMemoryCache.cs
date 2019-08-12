@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Microsoft.Extensions.Caching.Memory;
 using System.Linq;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ATBase.Core.Caching
 {
@@ -153,8 +153,7 @@ namespace ATBase.Core.Caching
         /// <param name="key"></param>
         public T Get<T>(Object key)
         {
-            Object value;
-            if (TryGetValue(key, out value) && value is T)
+            if (TryGetValue(key, out Object value) && value is T)
             {
                 return (T)value;
             }

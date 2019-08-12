@@ -8,7 +8,7 @@ namespace ATBase.Logging.Appenders
 {
     public class ConsoleAppender : Appender
     {
-        private ConsoleLogConfig _config;
+        private readonly ConsoleLogConfig _config;
 
         public ConsoleAppender(ConsoleLogConfig config)
         {

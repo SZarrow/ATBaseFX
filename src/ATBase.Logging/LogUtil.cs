@@ -104,7 +104,7 @@ namespace ATBase.Logging
             }
         }
 
-        public static String MiniFormatExceptions(Exception[] exceptions, JsonSerializerSettings settings = null)
+        public static String MiniFormatExceptions(Exception[] exceptions)
         {
             if (exceptions == null || exceptions.Length == 0) { return String.Empty; }
 

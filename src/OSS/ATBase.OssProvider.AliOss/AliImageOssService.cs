@@ -16,7 +16,7 @@ namespace ATBase.OssProvider.AliOss
     /// </summary>
     public class AliImageOssService : IImageOssService
     {
-        private IOssProvider _ossProvider;
+        private readonly IOssProvider _ossProvider;
         /// <summary>
         /// 
         /// </summary>

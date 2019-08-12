@@ -219,7 +219,7 @@ namespace ATBase.MQProvider.RocketMQ
 
     internal class RocketMQTransactionExecutor : LocalTransactionExecuter
     {
-        private Func<Message, TransactionStatus> _executor;
+        private readonly Func<Message, TransactionStatus> _executor;
 
         public RocketMQTransactionExecutor(Func<Message, TransactionStatus> executor)
         {

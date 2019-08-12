@@ -19,9 +19,9 @@ namespace ATBase.Schedule
     public class QuartzService : ServiceControl, ServiceSuspend
     {
         private readonly IScheduler scheduler;
-        private FileSystemWatcher watcher = new FileSystemWatcher();
-        private Dictionary<JobKey, JobInfo> cachedJobs = new Dictionary<JobKey, JobInfo>(30);
-        private String _jobsConfigFilePath;
+        private readonly FileSystemWatcher watcher = new FileSystemWatcher();
+        private readonly Dictionary<JobKey, JobInfo> cachedJobs = new Dictionary<JobKey, JobInfo>(30);
+        private readonly String _jobsConfigFilePath;
 
         /// <summary>
         /// 
@@ -294,7 +294,7 @@ namespace ATBase.Schedule
             }
         }
 
-        class JobInfo
+        private class JobInfo
         {
             public IJobDetail JobDetail { get; set; }
             public ITrigger Trigger { get; set; }

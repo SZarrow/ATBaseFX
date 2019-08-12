@@ -9,7 +9,7 @@ namespace ATBase.Logging.Appenders
 {
     internal class FileAppender : Appender
     {
-        private FileLogConfig _config;
+        private readonly FileLogConfig _config;
 
         public FileAppender(FileLogConfig config)
         {

@@ -12,7 +12,7 @@ namespace ATBase.MQProvider.RocketMQ
     /// </summary>
     public class RocketMQConsumer : IConsumer
     {
-        private PushConsumer _pushConsumer;
+        private readonly PushConsumer _pushConsumer;
         private Boolean _isStarted = false;
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace ATBase.MQProvider.RocketMQ
 
     internal class RocketMQMessageListener : MessageListener
     {
-        private Func<Message, ConsumeContext, ons.Action> _consume;
+        private readonly Func<Message, ConsumeContext, ons.Action> _consume;
 
         public RocketMQMessageListener(Func<Message, ConsumeContext, ons.Action> consume)
         {

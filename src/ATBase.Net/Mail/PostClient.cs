@@ -20,14 +20,14 @@ namespace ATBase.Net.Mail
     /// </summary>
     public sealed class PostClient : IDisposable
     {
-        private SmtpClient _client;
+        private readonly SmtpClient _client;
         private MailboxAddress _mainAccount;
         private MailboxAddress[] _receiveAccounts;
         private MailboxAddress[] _bccAccounts;
         private MailboxAddress[] _ccAccounts;
 
-        private static ConcurrentQueue<PostEntity> _messages;
-        private static ConcurrentQueue<Exception> _exceptions;
+        private static readonly ConcurrentQueue<PostEntity> _messages;
+        private static readonly ConcurrentQueue<Exception> _exceptions;
 
         static PostClient()
         {

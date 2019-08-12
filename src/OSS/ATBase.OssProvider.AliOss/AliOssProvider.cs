@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Aliyun.OSS;
+using ATBase.Core;
 using ATBase.OssCore;
 using ATBase.OssCore.Domain;
 using ATBase.OssCore.Util;
 using ATBase.OssProvider.AliOss.Util;
-using ATBase.Core;
 
 namespace ATBase.OssProvider.AliOss
 {
@@ -21,7 +21,7 @@ namespace ATBase.OssProvider.AliOss
     /// </summary>
     public class AliOssProvider : IOssProvider
     {
-        private OssClient _client;
+        private readonly OssClient _client;
 
         /// <summary>
         /// 

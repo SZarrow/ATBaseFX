@@ -13,7 +13,7 @@ namespace ATBase.OssCore.Common
     [Serializable]
     public class UrlSafeBase64String
     {
-        private String _base64String;
+        private readonly String _base64String;
 
         /// <summary>
         /// 使用一个字符串实例化UrlSafeBase64String类。

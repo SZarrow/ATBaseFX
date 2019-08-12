@@ -52,8 +52,7 @@ namespace ATBase.Core
                 String strValue = value.ToString();
                 if (Regex.IsMatch(strValue, @"^\d+$", RegexOptions.IgnoreCase))
                 {
-                    Int32 intValue;
-                    if (Int32.TryParse(strValue, out intValue))
+                    if (Int32.TryParse(strValue, out Int32 intValue))
                     {
                         try
                         {
