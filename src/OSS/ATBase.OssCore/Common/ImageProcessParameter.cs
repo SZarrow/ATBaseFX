@@ -12,7 +12,7 @@ namespace ATBase.OssCore.Common
     /// </summary>
     public abstract class ImageProcessParameter
     {
-        private Dictionary<String, List<String>> _parameters;
+        private readonly Dictionary<String, List<String>> _parameters;
 
         /// <summary>
         /// 
@@ -37,8 +37,7 @@ namespace ATBase.OssCore.Common
                     _parameters[operateName] = new List<String>(10);
                 }
 
-                List<String> args;
-                if (_parameters.TryGetValue(operateName, out args))
+                if (_parameters.TryGetValue(operateName, out List<String> args))
                 {
                     if (!args.Contains(parameter))
                     {

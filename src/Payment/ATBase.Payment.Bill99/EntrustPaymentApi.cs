@@ -72,7 +72,7 @@ namespace ATBase.Payment.Bill99
         /// <returns></returns>
         public XResult<EntrustPayResponse> EntrustPay(String requestUrl, EntrustPayRequest request)
         {
-            if (String.IsNullOrWhiteSpace(requestUrl))  
+            if (String.IsNullOrWhiteSpace(requestUrl))
             {
                 return new XResult<EntrustPayResponse>(null, new ArgumentNullException(nameof(requestUrl)));
             }

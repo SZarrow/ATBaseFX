@@ -11,7 +11,7 @@ namespace ATBase.Core.Collections
     [Serializable]
     public class PagedList<T> : IEnumerable<T> where T : class
     {
-        private IEnumerable<T> _container;
+        private readonly IEnumerable<T> _container;
 
         /// <summary>
         /// 

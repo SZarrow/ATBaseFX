@@ -14,10 +14,10 @@ namespace ATBase.Security
     /// </summary>
     public static class CryptoHelper
     {
-        private static IOneWayHash _onewayhash;
-        private static IRSAProvider _rsaProvider;
-        private static IAESProvider _aesProvider;
-        private static IDESProvider _desProvider;
+        private static readonly IOneWayHash _onewayhash;
+        private static readonly IRSAProvider _rsaProvider;
+        private static readonly IAESProvider _aesProvider;
+        private static readonly IDESProvider _desProvider;
 
         static CryptoHelper()
         {

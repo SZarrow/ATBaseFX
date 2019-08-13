@@ -113,7 +113,7 @@ namespace ATBase.MQProvider.RocketMQ
 
     internal class RocketMQTransactionChecker : LocalTransactionChecker
     {
-        private Func<Message, TransactionStatus> _checker;
+        private readonly Func<Message, TransactionStatus> _checker;
 
         public RocketMQTransactionChecker(Func<Message, TransactionStatus> checker)
         {

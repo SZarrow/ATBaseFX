@@ -15,7 +15,7 @@ namespace ATBase.OssProvider.AliOss
     /// </summary>
     public class AliImageProcessor : IImageProcess
     {
-        private IOssProvider _provider;
+        private readonly IOssProvider _provider;
 
         /// <summary>
         /// 

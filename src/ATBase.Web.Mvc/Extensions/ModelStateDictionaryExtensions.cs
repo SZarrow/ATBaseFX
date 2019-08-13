@@ -1,8 +1,8 @@
-﻿using ATBase.Core;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ATBase.Core;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ATBase.Web.Mvc
 {

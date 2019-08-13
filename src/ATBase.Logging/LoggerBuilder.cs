@@ -9,7 +9,7 @@ namespace ATBase.Logging
     /// </summary>
     public class LoggerBuilder
     {
-        private List<LogConfig> _configs;
+        private readonly List<LogConfig> _configs;
 
         /// <summary>
         /// 

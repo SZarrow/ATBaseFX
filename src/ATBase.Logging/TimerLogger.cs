@@ -9,19 +9,28 @@ using System.Threading;
 using System.Threading.Tasks;
 using ATBase.Core;
 using ATBase.Logging.Appenders;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ATBase.Logging
 {
     internal class TimerLogger : ILogger
     {
-        private Dictionary<Int32, ConcurrentQueue<LogEntity>> _messages;
-        private ThreadLocal<LocalTraceData> _local;
-        private IEnumerable<IAppender> _appenders;
-        private ReaderWriterLockSlim _rwLock;
+        private static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            ContractResolver = new DefaultContractResolver(),
+            DateFormatString = "yyyy-MM-dd HH:mm:ss"
+        };
 
-        private IEnumerable<Int32> _logTypes = null;
+        private readonly Dictionary<Int32, ConcurrentQueue<LogEntity>> _messages;
+        private readonly ThreadLocal<LocalTraceData> _local;
+        private readonly IEnumerable<IAppender> _appenders;
+        private readonly ReaderWriterLockSlim _rwLock;
+
+        private readonly IEnumerable<Int32> _logTypes = null;
         private volatile Int32 _dueTime = 1000;
-        private Int32 _batchCommitMaxSize = 10;
+        private readonly Int32 _batchCommitMaxSize = 10;
         private Int32 _idleTimes = 0;
 
         private Timer _timer;
@@ -206,10 +215,36 @@ namespace ATBase.Logging
                 Phase = phase,
                 Exceptions = exceptions,
                 LogContent = content,
-                KeyData = keyData,
                 LogType = logType,
                 CreateTime = DateTime.Now
             };
+
+            if (keyData != null)
+            {
+                IEnumerable<Object> datas = keyData is Object[]? keyData as Object[] : (new Object[] { keyData });
+                StringBuilder sb = new StringBuilder();
+                foreach (var data in datas)
+                {
+                    sb.Append(":");
+
+                    if (data is String || data is ValueType)
+                    {
+                        sb.AppendLine(data.ToString());
+                        continue;
+                    }
+
+                    try
+                    {
+                        sb.AppendLine(JsonConvert.SerializeObject(data, DefaultJsonSerializerSettings));
+                    }
+                    catch (Exception ex)
+                    {
+                        sb.AppendLine($"无法序列化KeyData，原因：{ex.Message}");
+                    }
+                }
+
+                logEntity.KeyData = sb.ToString();
+            }
 
             AppendToQueue(logType, logEntity);
         }
