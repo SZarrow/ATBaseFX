@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Collections.Generic;
-using System.Text;
+using System.Configuration;
+using System.Data;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Reflection;
-using System.Net;
 
 //批量付款API应用
 #region 大批量付款结算应用类
@@ -26,9 +26,9 @@ public class bigpay
     /// <summary>
     ///把两个 byte数组拼凑成一个数组
     /// </summary>
-    public static byte[] AppendArrays(byte[] a, byte[] b)
+    public static Byte[] AppendArrays(Byte[] a, Byte[] b)
     {
-        byte[] c = new byte[a.Length + b.Length]; // just one array allocation
+        Byte[] c = new Byte[a.Length + b.Length]; // just one array allocation
         Buffer.BlockCopy(a, 0, c, 0, a.Length);
         Buffer.BlockCopy(b, 0, c, a.Length, b.Length);
         return c;
@@ -37,11 +37,11 @@ public class bigpay
     /// <summary>
     /// 获取字节值，将字符型转换成字节型【strData：原字符；TypeId编码类型1：Base64编码， 2：UTF8编码， 3：ASCII编码】
     /// </summary>
-    public static byte[] CodingToByte(string strData, int TypeId)
+    public static Byte[] CodingToByte(String strData, Int32 TypeId)
     {
         try
         {
-            byte[] byteData;
+            Byte[] byteData;
             switch (TypeId)
             {
                 case 1:
@@ -59,7 +59,7 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -67,11 +67,11 @@ public class bigpay
     /// <summary>
     /// 获取字符值， 将字节型转换成字符型【byteData：原字节；TypeId编码类型1：Base64编码， 2：UTF8编码， 3：ASCII编码】
     /// </summary>
-    public static string CodingToString(byte[] byteData, int TypeId)
+    public static String CodingToString(Byte[] byteData, Int32 TypeId)
     {
         try
         {
-            string stringData;
+            String stringData;
             switch (TypeId)
             {
                 case 1:
@@ -89,7 +89,7 @@ public class bigpay
         }
         catch
         {
-            string bnull = "";
+            String bnull = "";
             return bnull;
         }
     }
@@ -100,12 +100,12 @@ public class bigpay
     /// <summary>
     /// 获取随机key 【BitType：位数  传入1：64位/8个字符；传入2：128位/16个字符；传入3：192位/24个字符；】
     /// </summary>
-    public static byte[] randomKey(int BitType)
+    public static Byte[] randomKey(Int32 BitType)
     {
         try
         {
-            string typeName = "";
-            int typeSize = 0;
+            String typeName = "";
+            Int32 typeSize = 0;
             if (BitType == 1)
             {
                 typeName = "DES";
@@ -120,16 +120,16 @@ public class bigpay
             {
                 typeName = "3DES";
                 typeSize = 192;
-            } 
+            }
 
             SymmetricAlgorithm symmProvider = SymmetricAlgorithm.Create(typeName);
             symmProvider.KeySize = typeSize;
-            byte[] bkey = symmProvider.Key;
+            Byte[] bkey = symmProvider.Key;
             return bkey;
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -139,73 +139,73 @@ public class bigpay
     /// <summary>
     /// GZip压缩函数(支持版本：2.0),返回字符串
     /// </summary>
-    public static string CompressGZip(byte[] strSource)
+    public static String CompressGZip(Byte[] strSource)
     {
         try
         {
             if (strSource == null)
                 throw new System.ArgumentException("字符串为空！");
             //byte[] buffer = System.Text.Encoding.UTF8.GetBytes(strSource);
-            byte[] buffer = strSource;
+            Byte[] buffer = strSource;
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             System.IO.Compression.GZipStream stream = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Compress, true);
             stream.Write(buffer, 0, buffer.Length);
             stream.Close();
-            byte[] buffer1 = ms.ToArray();
+            Byte[] buffer1 = ms.ToArray();
             ms.Close();
             return Convert.ToBase64String(buffer1, 0, buffer1.Length); //将压缩后的byte[]转换为Base64String
         }
         catch
         {
-            string bnull = "";
+            String bnull = "";
             return bnull;
         }
     }
     /// <summary>
     /// GZip压缩函数(支持版本：2.0),返回字节
     /// </summary>
-    public static byte[] CompressGZipExt(byte[] strSource)
+    public static Byte[] CompressGZipExt(Byte[] strSource)
     {
         try
         {
             if (strSource == null)
                 throw new System.ArgumentException("字符串为空！");
             //byte[] buffer = System.Text.Encoding.UTF8.GetBytes(strSource);
-            byte[] buffer = strSource;
+            Byte[] buffer = strSource;
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             System.IO.Compression.GZipStream stream = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Compress, true);
             stream.Write(buffer, 0, buffer.Length);
             stream.Close();
-            byte[] buffer1 = ms.ToArray();
+            Byte[] buffer1 = ms.ToArray();
 
             return buffer1;
         }
         catch
         {
-            byte[] bnull = new byte[0];
+            Byte[] bnull = new Byte[0];
             return bnull;
         }
     }
     /// <summary>
     /// Gzip解压缩函数(支持版本：2.0)【参数strSource：原文；codeType：指定编码类型，值1：Base64，值2：UTF8】
     /// </summary>
-    public static string DecompressGZip(string strSource, int codeType)
+    public static String DecompressGZip(String strSource, Int32 codeType)
     {
         try
         {
             if (strSource == null)
                 throw new System.ArgumentException("字符串不能为空！");
-            byte[] buffer = Convert.FromBase64String(strSource);
+            Byte[] buffer = Convert.FromBase64String(strSource);
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             ms.Write(buffer, 0, buffer.Length);
             ms.Position = 0;
             System.IO.Compression.GZipStream stream = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Decompress);
             stream.Flush();
-            int nSize = 6000 * 1024 + 256; //字符串不超过6000K
-            byte[] decompressBuffer = new byte[nSize];
-            int nSizeIncept = stream.Read(decompressBuffer, 0, nSize);
+            Int32 nSize = 6000 * 1024 + 256; //字符串不超过6000K
+            Byte[] decompressBuffer = new Byte[nSize];
+            Int32 nSizeIncept = stream.Read(decompressBuffer, 0, nSize);
             stream.Close();
-            string backStr = "";
+            String backStr = "";
             if (codeType == 1)
             {
                 backStr = System.Convert.ToBase64String(decompressBuffer, 0, nSizeIncept);
@@ -219,7 +219,7 @@ public class bigpay
         }
         catch
         {
-            string bnull = "";
+            String bnull = "";
             return bnull;
         }
 
@@ -232,14 +232,14 @@ public class bigpay
     /// <summary>
     /// MD5签名，然后返回string类型签名数据（1：要签名的参数，2：编码方式）。
     /// </summary>
-    public static string MD5Signature(string dataStr, string codeType)
+    public static String MD5Signature(String dataStr, String codeType)
     {
         try
         {
             System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] t = md5.ComputeHash(System.Text.Encoding.GetEncoding(codeType).GetBytes(dataStr));
+            Byte[] t = md5.ComputeHash(System.Text.Encoding.GetEncoding(codeType).GetBytes(dataStr));
             System.Text.StringBuilder sb = new System.Text.StringBuilder(32);
-            for (int i = 0; i < t.Length; i++)
+            for (Int32 i = 0; i < t.Length; i++)
             {
                 sb.Append(t[i].ToString("x").PadLeft(2, '0'));
             }
@@ -247,7 +247,7 @@ public class bigpay
         }
         catch
         {
-            string bnull = "";
+            String bnull = "";
             return bnull;
         }
 
@@ -258,19 +258,19 @@ public class bigpay
     /// <summary>
     /// MD5摘要，然后返回byte类型摘要数据，传入字符串。
     /// </summary>
-    public static byte[] MD5summary(string strSource)
+    public static Byte[] MD5summary(String strSource)
     {
         try
         {
-            byte[] bSource = System.Text.Encoding.UTF8.GetBytes(strSource);
+            Byte[] bSource = System.Text.Encoding.UTF8.GetBytes(strSource);
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] result = md5.ComputeHash(bSource);//摘要值
+            Byte[] result = md5.ComputeHash(bSource);//摘要值
             //string backStr = Convert.ToBase64String(result);
             return result;
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -278,19 +278,19 @@ public class bigpay
     /// <summary>
     /// MD5摘要，然后返回byte类型摘要数据，传入字节。
     /// </summary>
-    public static byte[] MD5summaryExt(byte[] strSource)
+    public static Byte[] MD5summaryExt(Byte[] strSource)
     {
         try
         {
             // byte[] bSource = System.Text.Encoding.UTF8.GetBytes(strSource);
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] result = md5.ComputeHash(strSource);//摘要值
+            Byte[] result = md5.ComputeHash(strSource);//摘要值
             //string backStr = Convert.ToBase64String(result);
             return result;
         }
         catch
         {
-            byte[] bnull = { };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -298,19 +298,19 @@ public class bigpay
     /// <summary>
     /// SHA1摘要，然后返回byte类型摘要数据。
     /// </summary>
-    public static byte[] SHA1summary(string strSource)
+    public static Byte[] SHA1summary(String strSource)
     {
         try
         {
-            byte[] bSource = System.Text.Encoding.UTF8.GetBytes(strSource);
+            Byte[] bSource = System.Text.Encoding.UTF8.GetBytes(strSource);
             SHA1CryptoServiceProvider sha = new SHA1CryptoServiceProvider();
-            byte[] HashData = sha.ComputeHash(bSource);
+            Byte[] HashData = sha.ComputeHash(bSource);
             //string backStr = Convert.ToBase64String(HashData);
             return HashData;
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -320,14 +320,14 @@ public class bigpay
     /// <summary>
     /// 引用证书非对称签名/验签RSA-私钥签名【OriginalString：原文（有中文用utf-8编码的字节）；prikey_path：证书路径；CertificatePW：证书密码；SignType：签名摘要类型（1：MD5，2：SHA1）】
     /// </summary>
-    public static byte[] CerRSASignature(byte[] OriginalString, string prikey_path, string CertificatePW, int SignType)
+    public static Byte[] CerRSASignature(Byte[] OriginalString, String prikey_path, String CertificatePW, Int32 SignType)
     {
         try
         {
             X509Certificate2 x509_Cer1 = new X509Certificate2(prikey_path, CertificatePW);
             RSACryptoServiceProvider rsapri = (RSACryptoServiceProvider)x509_Cer1.PrivateKey;
             RSAPKCS1SignatureFormatter f = new RSAPKCS1SignatureFormatter(rsapri);
-            byte[] result;
+            Byte[] result;
             switch (SignType)
             {
                 case 1:
@@ -341,12 +341,12 @@ public class bigpay
                     result = sha.ComputeHash(OriginalString);//摘要值
                     break;
             }
-            byte[] SignData = f.CreateSignature(result);
+            Byte[] SignData = f.CreateSignature(result);
             return SignData;
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -354,7 +354,7 @@ public class bigpay
     /// <summary>
     /// 引用证书非对称签名/验签RSA-公钥验签【OriginalString：原文（有中文用utf-8编码的字节）；SignatureString：签名字符；pubkey_path：证书路径；CertificatePW：证书密码；SignType：签名摘要类型（1：MD5，2：SHA1）】
     /// </summary>
-    public static bool CerRSAVerifySignature(byte[] OriginalString, byte[] SignatureString, string pubkey_path, string CertificatePW, int SignType)
+    public static Boolean CerRSAVerifySignature(Byte[] OriginalString, Byte[] SignatureString, String pubkey_path, String CertificatePW, Int32 SignType)
     {
         try
         {
@@ -362,7 +362,7 @@ public class bigpay
             RSACryptoServiceProvider rsapub = (RSACryptoServiceProvider)x509_Cer1.PublicKey.Key;
             rsapub.ImportCspBlob(rsapub.ExportCspBlob(false));
             RSAPKCS1SignatureDeformatter f = new RSAPKCS1SignatureDeformatter(rsapub);
-            byte[] HashData;
+            Byte[] HashData;
             switch (SignType)
             {
                 case 1:
@@ -396,36 +396,36 @@ public class bigpay
     /// <summary>
     /// 引用证书非对称加密/解密RSA-公钥加密获取密文【DataToEncrypt：原文（有中文用utf-8编码的字节）；pubkey_path：证书路径；CertificatePW：证书密码】
     /// </summary>
-    public static byte[] CerRSAEncrypt(byte[] DataToEncrypt, string pubkey_path, string CertificatePW)
+    public static Byte[] CerRSAEncrypt(Byte[] DataToEncrypt, String pubkey_path, String CertificatePW)
     {
         try
         {
             X509Certificate2 x509_Cer1 = new X509Certificate2(pubkey_path, CertificatePW);
             RSACryptoServiceProvider rsapub = (RSACryptoServiceProvider)x509_Cer1.PublicKey.Key;
-            byte[] bytes_Cypher_Text = rsapub.Encrypt(DataToEncrypt, false);
+            Byte[] bytes_Cypher_Text = rsapub.Encrypt(DataToEncrypt, false);
             return bytes_Cypher_Text;
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
     /// <summary>
     /// 引用证书非对称加密/解密RSA-私钥解密获取原文【DataToDecrypt：密文；prikey_path：证书路径；CertificatePW：证书密码】【原文有中文返回字节用utf-8编码转换成字符】
     /// </summary>
-    public static byte[] CerRSADecrypt(byte[] DataToDecrypt, string prikey_path, string CertificatePW)
+    public static Byte[] CerRSADecrypt(Byte[] DataToDecrypt, String prikey_path, String CertificatePW)
     {
         try
         {
             X509Certificate2 x509_Cer2 = new X509Certificate2(prikey_path, CertificatePW);
             RSACryptoServiceProvider rsapri = (RSACryptoServiceProvider)x509_Cer2.PrivateKey;
-            byte[] bytes_Plain_Text = rsapri.Decrypt(DataToDecrypt, false);
+            Byte[] bytes_Plain_Text = rsapri.Decrypt(DataToDecrypt, false);
             return bytes_Plain_Text;
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -435,7 +435,7 @@ public class bigpay
     /// <summary>
     /// Des 64Bit 算法加密字串【DataToEncrypt：原文；ekey：随机密码，8个字符】【原文有中文传入的原文字符用utf-8编码转换成字节】
     /// </summary>
-    public static byte[] DesEncrypt(byte[] DataToEncrypt, byte[] ekey)
+    public static Byte[] DesEncrypt(Byte[] DataToEncrypt, Byte[] ekey)
     {
         try
         {
@@ -444,7 +444,7 @@ public class bigpay
             MemoryStream ms;
             CryptoStream cs;
             //向量指定的是：byte[] eiv ={0,0,0,0,0,0,0,0};
-            byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
+            Byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
             ct = mCSP.CreateEncryptor(ekey, eiv);
             ms = new MemoryStream();
             cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
@@ -455,14 +455,14 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
     /// <summary>
     /// Des 64Bit 算法解密字串【DataToDecrypt：密文；ekey：随机密码，8个字符】【原文有中文返回字节用utf-8编码转换成字符】
     /// </summary>
-    public static byte[] DesDecrypt(byte[] DataToDecrypt, byte[] ekey)
+    public static Byte[] DesDecrypt(Byte[] DataToDecrypt, Byte[] ekey)
     {
         try
         {
@@ -471,7 +471,7 @@ public class bigpay
             MemoryStream ms;
             CryptoStream cs;
             //向量指定的是：byte[] eiv ={0,0,0,0,0,0,0,0};
-            byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
+            Byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
             ct = mCSP.CreateDecryptor(ekey, eiv);
             ms = new MemoryStream();
             cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
@@ -482,7 +482,7 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -492,7 +492,7 @@ public class bigpay
     /// <summary>
     /// TripleDes 128Bit 算法加密字串【DataToEncrypt：原文；priKkey：随机密码，十六个字符】【原文有中文传入的原文字符用utf-8编码转换成字节】
     /// </summary>
-    public static byte[] TripleDesEncrypt(byte[] DataToEncrypt, byte[] ekey)
+    public static Byte[] TripleDesEncrypt(Byte[] DataToEncrypt, Byte[] ekey)
     {
         try
         {
@@ -501,7 +501,7 @@ public class bigpay
             MemoryStream ms;
             CryptoStream cs;
             //向量指定的是：byte[] eiv ={0,0,0,0,0,0,0,0};
-            byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
+            Byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
             ct = mCSP.CreateEncryptor(ekey, eiv);
             ms = new MemoryStream();
             cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
@@ -512,14 +512,14 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
     /// <summary>
     /// TripleDes 128Bit 算法解密字串【DataToDecrypt：密文；priKkey：随机密码，十六个字符】【原文有中文返回字节用utf-8编码转换成字符】
     /// </summary>
-    public static byte[] TripleDesDecrypt(byte[] DataToDecrypt, byte[] ekey)
+    public static Byte[] TripleDesDecrypt(Byte[] DataToDecrypt, Byte[] ekey)
     {
         try
         {
@@ -528,7 +528,7 @@ public class bigpay
             MemoryStream ms;
             CryptoStream cs;
             //向量指定的是：byte[] eiv ={0,0,0,0,0,0,0,0};
-            byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
+            Byte[] eiv = CodingToByte("AAAAAAAAAAA=", 1);
             ct = mCSP.CreateDecryptor(ekey, eiv);
             ms = new MemoryStream();
             cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
@@ -539,7 +539,7 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -549,13 +549,13 @@ public class bigpay
     /// <summary>
     /// AES加密 128Bit 算法加密字串【Data：原文；bKey：随机密码，16个字符】【原文有中文传入的原文字符用utf-8编码转换成字节】
     /// </summary>
-    public static byte[] AesEncrypt(byte[] Data, byte[] bKey)
+    public static Byte[] AesEncrypt(Byte[] Data, Byte[] bKey)
     {
         try
         {
             //向量指定的是：byte[] bVector ={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-            byte[] bVector = Convert.FromBase64String("AAAAAAAAAAAAAAAAAAAAAA==");
-            byte[] Cryptograph = null; // 加密后的密文
+            Byte[] bVector = Convert.FromBase64String("AAAAAAAAAAAAAAAAAAAAAA==");
+            Byte[] Cryptograph = null; // 加密后的密文
             Rijndael Aes = Rijndael.Create();
 
             // 开辟一块内存流
@@ -576,20 +576,20 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
     /// <summary>
     /// Aes解密 128Bit 算法解密字串【Data：原文；bKey：随机密码，16个字符】【原文有中文传入的原文字符用utf-8编码转换成字节】
     /// </summary>
-    public static byte[] AesDecrypt(byte[] Data, byte[] bKey)
+    public static Byte[] AesDecrypt(Byte[] Data, Byte[] bKey)
     {
         try
         {
             //向量指定的是：byte[] bVector ={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-            byte[] bVector = Convert.FromBase64String("AAAAAAAAAAAAAAAAAAAAAA==");
-            byte[] original = null; // 解密后的明文
+            Byte[] bVector = Convert.FromBase64String("AAAAAAAAAAAAAAAAAAAAAA==");
+            Byte[] original = null; // 解密后的明文
             Rijndael Aes = Rijndael.Create();
 
             // 开辟一块内存流，存储密文
@@ -603,7 +603,7 @@ public class bigpay
                     // 明文存储区
                     using (MemoryStream originalMemory = new MemoryStream())
                     {
-                        byte[] Buffer = new byte[1024];
+                        Byte[] Buffer = new Byte[1024];
                         Int32 readBytes = 0;
                         while ((readBytes = Decryptor.Read(Buffer, 0, Buffer.Length)) > 0)
                         {
@@ -617,7 +617,7 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -631,11 +631,11 @@ public class bigpay
     /// <param name="enKey">密码</param>
     /// <param name="EncryptType">解密算法类型</param>
     /// <returns>SymmetryEncryptType：密文</returns>
-    public static byte[] SymmetryEncryptType(byte[] orgData, byte[] enKey, int EncryptType)
+    public static Byte[] SymmetryEncryptType(Byte[] orgData, Byte[] enKey, Int32 EncryptType)
     {
         try
         {
-            byte[] badkData = null;
+            Byte[] badkData = null;
             if (EncryptType == 1)
             {
                 badkData = bigpay.AesEncrypt(orgData, enKey);
@@ -652,7 +652,7 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }
@@ -664,11 +664,11 @@ public class bigpay
     /// <param name="enKey">密码</param>
     /// <param name="DecryptType">解密算法类型</param>
     /// <returns>SymmetryDecryptType：明文</returns>
-    public static byte[] SymmetryDecryptType(byte[] orgData, byte[] enKey, int DecryptType)
+    public static Byte[] SymmetryDecryptType(Byte[] orgData, Byte[] enKey, Int32 DecryptType)
     {
         try
         {
-            byte[] badkData = null;
+            Byte[] badkData = null;
             if (DecryptType == 1)
             {
                 badkData = bigpay.AesDecrypt(orgData, enKey);
@@ -685,7 +685,7 @@ public class bigpay
         }
         catch
         {
-            byte[] bnull ={ };
+            Byte[] bnull = { };
             return bnull;
         }
     }

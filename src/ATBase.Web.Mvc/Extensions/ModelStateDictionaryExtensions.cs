@@ -1,8 +1,8 @@
-﻿using ATBase.Core;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ATBase.Core;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ATBase.Web.Mvc
 {
@@ -11,10 +11,12 @@ namespace ATBase.Web.Mvc
     /// </summary>
     public static class ModelStateDictionaryExtensions
     {
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="msd"></param>
+        /// <returns></returns>
         public static String GetFirstErrorMessage(this ModelStateDictionary msd)
         {
             if (msd != null && msd.Count > 0)

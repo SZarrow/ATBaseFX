@@ -12,7 +12,7 @@ namespace ATBase.Core
     /// </summary>
     public static class ErrorCodeDescriptor
     {
-        private static Dictionary<Int32, String> _errorDic = new Dictionary<Int32, String>(100);
+        private static readonly Dictionary<Int32, String> _errorDic = new Dictionary<Int32, String>(100);
 
         /// <summary>
         /// 

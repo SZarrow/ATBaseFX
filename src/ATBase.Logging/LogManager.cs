@@ -14,7 +14,7 @@ namespace ATBase.Logging
     /// </summary>
     public static class LogManager
     {
-        private static ReaderWriterLockSlim s_lock;
+        private static readonly ReaderWriterLockSlim s_lock;
         private static ILogger s_logger;
 
         static LogManager()

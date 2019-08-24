@@ -8,7 +8,7 @@ namespace ATBase.Payment.Bill99.Domain
     /// <summary>
     /// 
     /// </summary>
-    public class EntrustPayResponse:MasMessage
+    public class EntrustPayResponse : MasMessage
     {
         /// <summary>
         /// 

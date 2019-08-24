@@ -14,13 +14,6 @@ namespace ATBase.Logging
     [Serializable]
     public class LogEntity
     {
-        private static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            ContractResolver = new DefaultContractResolver(),
-            DateFormatString = "yyyy-MM-dd HH:mm:ss"
-        };
-
         /// <summary>
         /// 
         /// </summary>
@@ -88,41 +81,12 @@ namespace ATBase.Logging
 
             if (this.KeyData != null)
             {
-                IEnumerable<Object> datas = null;
-
-                if (this.KeyData is Object[])
-                {
-                    datas = this.KeyData as Object[];
-                }
-                else
-                {
-                    datas = new Object[] { this.KeyData };
-                }
-
-                foreach (var data in datas)
-                {
-                    sb.Append(":");
-
-                    if (data is String || data is ValueType)
-                    {
-                        sb.AppendLine(data.ToString());
-                        continue;
-                    }
-
-                    try
-                    {
-                        sb.AppendLine(JsonConvert.SerializeObject(data, DefaultJsonSerializerSettings));
-                    }
-                    catch (Exception ex)
-                    {
-                        sb.AppendLine($"无法序列化KeyData，原因：{ex.Message}");
-                    }
-                }
+                sb.Append(this.KeyData);
             }
 
             if (this.Exceptions != null && this.Exceptions.Length > 0)
             {
-                sb.AppendLine(LogUtil.MiniFormatExceptions(this.Exceptions, DefaultJsonSerializerSettings));
+                sb.AppendLine(LogUtil.MiniFormatExceptions(this.Exceptions));
             }
 
             return sb.ToString();

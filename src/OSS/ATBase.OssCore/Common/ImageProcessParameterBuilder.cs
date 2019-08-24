@@ -13,7 +13,7 @@ namespace ATBase.OssCore.Common
     /// </summary>
     public class ImageProcessParameterBuilder
     {
-        private List<ImageProcessParameter> _paras;
+        private readonly List<ImageProcessParameter> _paras;
 
         /// <summary>
         /// 实例化ImageProcessParameterBuilder。

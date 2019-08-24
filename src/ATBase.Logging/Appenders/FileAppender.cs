@@ -9,7 +9,7 @@ namespace ATBase.Logging.Appenders
 {
     internal class FileAppender : Appender
     {
-        private FileLogConfig _config;
+        private readonly FileLogConfig _config;
 
         public FileAppender(FileLogConfig config)
         {
@@ -49,6 +49,11 @@ namespace ATBase.Logging.Appenders
                 {
                     sw.WriteLine(FormatContent(content));
                     writtenLogs.Add(content);
+                }
+
+                if (fs.Length > 10485760)
+                {
+                    _config.PartialIndex++;
                 }
 
                 return new XResult<IEnumerable<LogEntity>>(writtenLogs.Count > 0 ? writtenLogs : null);

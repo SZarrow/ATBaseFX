@@ -17,8 +17,7 @@ namespace ATBase.Core
         {
             if (!String.IsNullOrWhiteSpace(str))
             {
-                Int32 value;
-                if (Int32.TryParse(str, out value))
+                if (Int32.TryParse(str, out Int32 value))
                 {
                     return value;
                 }
@@ -35,8 +34,7 @@ namespace ATBase.Core
         {
             if (!String.IsNullOrWhiteSpace(str))
             {
-                Int64 value;
-                if (Int64.TryParse(str, out value))
+                if (Int64.TryParse(str, out Int64 value))
                 {
                     return value;
                 }
@@ -53,8 +51,7 @@ namespace ATBase.Core
         {
             if (!String.IsNullOrWhiteSpace(str))
             {
-                Decimal value;
-                if (Decimal.TryParse(str, out value))
+                if (Decimal.TryParse(str, out Decimal value))
                 {
                     return value;
                 }

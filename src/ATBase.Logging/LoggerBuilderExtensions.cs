@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using ATBase.Core;
 
 namespace ATBase.Logging
 {
@@ -27,8 +29,6 @@ namespace ATBase.Logging
                 configAction(fileConfig);
             }
 
-            builder.AddLogConfig(fileConfig);
-
             String saveDir = Path.GetDirectoryName(fileConfig.FilePath);
             if (!Directory.Exists(saveDir))
             {
@@ -38,6 +38,25 @@ namespace ATBase.Logging
                 }
                 catch (Exception ex) { throw ex; }
             }
+
+            var maxIndexPartialFile = (from file in Directory.EnumerateFiles(saveDir, $"{Path.GetFileNameWithoutExtension(fileConfig.FilePath)}_*.txt")
+                                       where file != null
+                                       orderby file descending
+                                       select Path.GetFileNameWithoutExtension(file)).FirstOrDefault();
+
+            if (maxIndexPartialFile.HasValue())
+            {
+                var startIndex = maxIndexPartialFile.IndexOf('_');
+                if (startIndex > 0)
+                {
+                    if (Int32.TryParse(maxIndexPartialFile.Substring(startIndex + 1), out Int32 partialIndex))
+                    {
+                        fileConfig.PartialIndex = partialIndex;
+                    }
+                }
+            }
+
+            builder.AddLogConfig(fileConfig);
         }
 
         /// <summary>

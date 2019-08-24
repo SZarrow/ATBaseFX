@@ -16,7 +16,7 @@ namespace ATBase.Core
 
         private const Int32 CODE_SUCCESS = 0;
         private const Int32 CODE_FAILURE = 1;
-        private Int64 _id;
+        private readonly Int64 _id;
 
         /// <summary>
         /// Gets the instance of Result&lt;T&gt; with default constructor。

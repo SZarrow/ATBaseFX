@@ -6,39 +6,39 @@ using ATBase.Core;
 namespace ATBase.Security
 {
     /// <summary>
-    /// 
+    /// DES加密解密
     /// </summary>
-    public interface IAESProvider
+    public interface IDESProvider
     {
         /// <summary>
         /// 
         /// </summary>
         Byte[] GenerateRandomKey();
         /// <summary>
-        /// AES加密
+        /// DES加密
         /// </summary>
         /// <param name="data"></param>
         /// <param name="key"></param>
-        XResult<Byte[]> AESEncrypt(Byte[] data, Byte[] key);
+        XResult<Byte[]> DESEncrypt(Byte[] data, Byte[] key);
         /// <summary>
-        /// AES加密
+        /// DES加密
         /// </summary>
         /// <param name="data"></param>
         /// <param name="key"></param>
         /// <param name="iv"></param>
-        XResult<Byte[]> AESEncrypt(Byte[] data, Byte[] key, Byte[] iv);
+        XResult<Byte[]> DESEncrypt(Byte[] data, Byte[] key, Byte[] iv);
         /// <summary>
-        /// AES解密
+        /// DES解密
         /// </summary>
         /// <param name="encryptedData"></param>
         /// <param name="key"></param>
-        XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key);
+        XResult<Byte[]> DESDecrypt(Byte[] encryptedData, Byte[] key);
         /// <summary>
-        /// AES解密
+        /// DES解密
         /// </summary>
         /// <param name="encryptedData"></param>
         /// <param name="key"></param>
         /// <param name="iv"></param>
-        XResult<Byte[]> AESDecrypt(Byte[] encryptedData, Byte[] key, Byte[] iv);
+        XResult<Byte[]> DESDecrypt(Byte[] encryptedData, Byte[] key, Byte[] iv);
     }
 }
